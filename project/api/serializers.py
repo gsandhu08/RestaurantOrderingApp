@@ -1,5 +1,5 @@
-from rest_framework import serializers
-from .models import RestaurantList
+from rest_framework import fields, serializers
+from .models import RestaurantList, Customer, RestaurantOwner
 
 
 class RestDetailSerializer(serializers.ModelSerializer):
@@ -7,3 +7,14 @@ class RestDetailSerializer(serializers.ModelSerializer):
         model= RestaurantList
         fields = ['id','profile_picture','name','address','owner_name','contact_person','mobile','email',
                     'opening_time','closing_time','rating','active','disable','created_date','updated_date']
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+class PartnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RestaurantOwner
+        fields = '__all__'
+

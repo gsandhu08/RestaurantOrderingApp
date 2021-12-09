@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from .models import RestaurantList, Customer, RestaurantOwner
-from .serializers import RestDetailSerializer, CustomerSerializer, PartnerSerializer
+from .models import Order, RestaurantList, Customer, RestaurantOwner, MenuItems
+from .serializers import OrderSerializer, OrderSerializer_create, RestDetailSerializer, CustomerSerializer, PartnerSerializer, MenuItemsSerializer
 from rest_framework.response import Response
 import sys
-from rest_framework_simplejwt.views import TokenObtainPairView
 from datetime import datetime
 from rest_framework.decorators import action
 from rest_framework_simplejwt.settings import api_settings
@@ -116,3 +115,27 @@ class PartnerView(ModelViewSet):
         phone = request.data.get('mobile')
         user = User.objects.get(username= str(phone))
         return Response(str(AccessToken.for_user(user)))
+
+class MenuItemsView(ModelViewSet):
+    queryset = MenuItems.objects.all()
+    serializer_class = MenuItemsSerializer
+    
+
+class OrderView(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def create(self,request):
+        try:
+            rawData = request.data
+            serializer = OrderSerializer_create(data=rawData)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data = {'status': True,
+                    'data': serializer.data,
+                    'error':None
+            }
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
+    

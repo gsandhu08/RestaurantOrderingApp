@@ -63,3 +63,4 @@ class Order(models.Model):
     customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
     total_amount = models.IntegerField()
     list_of_items= models.TextField(default=None,null=True)
+    status = models.CharField(max_length=20)

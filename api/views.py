@@ -119,6 +119,15 @@ class PartnerView(ModelViewSet):
 class MenuItemsView(ModelViewSet):
     queryset = MenuItems.objects.all()
     serializer_class = MenuItemsSerializer
+    def list(self, request, *args, **kwargs):
+        try:
+            data = request.GET.get('restaurant')
+            queryset =MenuItems.objects.filter(restaurant=data)
+            serializer = MenuItemsSerializer(queryset,many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))
+        
     
 
 class OrderView(ModelViewSet):

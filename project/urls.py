@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import SimpleRouter
-from api.views import RestaurantDetailView, CustomerView, PartnerView, MenuItemsView, OrderView
+from restaurant.views import RestaurantDetailView, PartnerView, MenuItemsView, OrderView
+from customer.views import CustomerView
 from django.urls.conf import include
 
 

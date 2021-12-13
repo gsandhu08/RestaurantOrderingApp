@@ -5,8 +5,8 @@ from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from models import Customer
-from serializers import CustomerSerializer
+from .models import Customer
+from .serializers import CustomerSerializer
 from datetime import datetime
 
 # Create your views here.

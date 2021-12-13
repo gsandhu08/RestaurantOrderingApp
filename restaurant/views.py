@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from models import RestaurantList, MenuItems, Order, RestaurantOwner
-from serializers import RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
+from .models import RestaurantList, MenuItems, Order, RestaurantOwner
+from .serializers import RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
 import sys
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
@@ -100,3 +100,24 @@ class OrderView(ModelViewSet):
             return Response(data)
         except Exception as e:
             return Response(str(e))
+    
+    def list(self,request):
+        try:
+            data = request.GET.get('status')
+            queryset = Order.objects.filter(status=data)
+            serializer = OrderSerializer(queryset,many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))
+
+    def patch(self,request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            data = request.data
+            serializer = OrderSerializer(instance, data, partial = True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))
+

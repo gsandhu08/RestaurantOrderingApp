@@ -3,3 +3,6 @@ images
 db.sqlite3
 customer/migrations
 restaurant/migrations
+__pycache__
+customer/__pycache__
+restaurant/__pycache__

@@ -1,3 +1,5 @@
 env
-
+images
 db.sqlite3
+customer/migrations
+restaurant/migrations

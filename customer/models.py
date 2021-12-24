@@ -6,7 +6,7 @@ gender_choices = (('M','Male'),('F','Female'),)
 class Customer(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField()
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='images/customer')
     dob = models.DateTimeField()
     mobile = PhoneField()
     address = models.TextField()

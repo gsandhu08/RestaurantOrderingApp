@@ -18,6 +18,7 @@ class RestaurantList(models.Model):
     disable = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True,editable=False)
     updated_date = models.DateTimeField(auto_now=True,editable=True)
+    category = models.CharField(max_length=30, default=None, null=True)
 
 gender_choices = (('M','Male'),('F','Female'),)
 

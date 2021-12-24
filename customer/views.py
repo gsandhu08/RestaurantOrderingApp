@@ -9,10 +9,12 @@ from .models import Customer
 from .serializers import CustomerSerializer
 from datetime import datetime
 
+
 # Create your views here.
 class CustomerView(ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    
     def create(self,request):
         try:
             rawData = request.data

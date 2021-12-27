@@ -4,7 +4,7 @@ from customer.models import Customer
 
 # Create your models here.
 class RestaurantList(models.Model):
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='images/restaurant')
     name = models.CharField(max_length=30)
     address = models.TextField()
     owner_name = models.CharField(max_length=30)
@@ -26,7 +26,7 @@ class RestaurantOwner(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField()
     mobile = PhoneField()
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='images/restaurant')
     address = models.TextField()
     gender = models.CharField(max_length=1,choices=gender_choices,default='M')
     created_date = models.DateTimeField(auto_now_add=True,editable=False)
@@ -37,7 +37,7 @@ class MenuItems(models.Model):
     category = models.CharField(max_length=50)
     price = models.IntegerField()
     description = models.TextField()
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to='images/restaurant')
     prep_time = models.IntegerField()
     is_veg = models.BooleanField()
     created_date = models.DateTimeField(auto_now_add=True,editable=False)

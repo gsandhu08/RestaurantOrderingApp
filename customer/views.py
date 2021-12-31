@@ -38,10 +38,10 @@ class CustomerView(ModelViewSet):
             data= {
                 'status': False,
                 'data': [],
-                'error': str(e)
+                'error': str(e),
             }
-            print(filename,line_number)
-            return Response(data)
+            
+            return Response(data, filename, line_number)
     def list(self,request):
         try:
             data = Customer.objects.all()

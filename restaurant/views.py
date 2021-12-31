@@ -64,6 +64,13 @@ class RestaurantDetailView(ModelViewSet):
             }
         return Response(data)
 
+    # @action (detail=False, methods=['GET'])
+    # def search(self,request):
+    #     data = RestaurantList.objects.all()
+    #     query= request.GET.get('query')
+    #     data_serializer = RestDetailSerializer(data, many=True)
+    #     data=
+
 class PartnerView(ModelViewSet):
     queryset = RestaurantOwner.objects.all()
     serializer_class = PartnerSerializer

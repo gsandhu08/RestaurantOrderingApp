@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'customer',
     'rest_framework',
     'phone_field',
-    'corsheaders',
+    
 ]
 
 MIDDLEWARE = [

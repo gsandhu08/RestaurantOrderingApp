@@ -68,9 +68,10 @@ class RestaurantDetailView(ModelViewSet):
     def location_search(self,request):
         try:
             search_query= request.GET.get('location')
-            cities = RestaurantList.objects.filter('city'==search_query)
+            queryset = RestaurantList.objects.filter(city=search_query)
+            serializer= RestDetailSerializer(queryset)
             data={'status':True,
-                    'data': cities,
+                    'data': serializer.data,
                     'error': None}
             return Response(data)
         except Exception as e:

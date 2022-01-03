@@ -19,9 +19,9 @@ class CustomerView(ModelViewSet):
     def create(self,request):
         try:
             rawData = request.data
-            dob = rawData.get('dob').split('-')
-            dob = datetime(int(dob[0]),int(dob[1]),int(dob[2]))
-            rawData['dob']=dob
+            # dob = rawData.get('dob').split('-')
+            # dob = datetime(int(dob[0]),int(dob[1]),int(dob[2]))
+            # rawData['dob']=dob
             data = rawData
             serializer = CustomerSerializer(data=data)
             serializer.is_valid(raise_exception=True)
@@ -57,9 +57,12 @@ class CustomerView(ModelViewSet):
     
     @action(detail=False, methods=['POST'])
     def login(self,request):
-        data = request.data
-        otp= '123456'
-        if request.data.get('otp')==otp:
-            user = User.objects.create_user(username=data.get('mobile'),password='password')
-            user.save()
-        return Response(str(AccessToken.for_user(user)))
+        try:
+            data = request.data
+            otp= '123456'
+            if request.data.get('otp')==otp:
+                user = User.objects.create_user(username=data.get('mobile'),password='password')
+                user.save()
+            return Response(str(AccessToken.for_user(user)))
+        except Exception as e:
+            return Response(str(e))

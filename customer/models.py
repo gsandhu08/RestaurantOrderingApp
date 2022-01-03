@@ -1,5 +1,5 @@
 from django.db import models
-from phone_field import PhoneField
+# from phone_field import PhoneField
 
 # Create your models here.
 gender_choices = (('M','Male'),('F','Female'),)
@@ -8,7 +8,7 @@ class Customer(models.Model):
     email = models.EmailField()
     profile_picture = models.ImageField(upload_to='images/customer')
     dob = models.DateField()
-    mobile = PhoneField()
+    mobile = models.CharField(max_length=10)
     address = models.TextField()
     gender = models.CharField(max_length=1,choices=gender_choices,default='M')
     nationality = models.CharField(max_length=20)

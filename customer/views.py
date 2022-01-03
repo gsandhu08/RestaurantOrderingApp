@@ -87,7 +87,7 @@ class CustomerView(ModelViewSet):
                     user = User.objects.get(username=phone)
                     customer=Customer.objects.create(mobile=phone)
                     customer=CustomerSerializer(customer)
-                    token = AccessToken(user)
+                    token = AccessToken.for_user(user)
                     data = {
                         'status':True,
                         'data':token,

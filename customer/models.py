@@ -7,7 +7,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField()
     profile_picture = models.ImageField(upload_to='images/customer')
-    dob = models.DateTimeField()
+    dob = models.DateField()
     mobile = PhoneField()
     address = models.TextField()
     gender = models.CharField(max_length=1,choices=gender_choices,default='M')

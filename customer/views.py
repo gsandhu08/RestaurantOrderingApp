@@ -87,7 +87,7 @@ class CustomerView(ModelViewSet):
     #         return Response(data)
 
     @action(methods=['get'], detail=False,permission_classes=[])
-    def signup(self,request):
+    def send_otp(self,request):
         try:
             phone=request.GET.get('phone')
             user=User.objects.get(username=phone)

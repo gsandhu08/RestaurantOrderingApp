@@ -80,9 +80,8 @@ class CustomerView(ModelViewSet):
     @action(detail=False, methods=['POST'])
     def login(self,request):
         try:
-            data=request.data
-            phone = data.get('phone')
-            otp=data.get('otp')
+            phone=request.GET.get('phone')
+            otp=request.GET.get('otp')
             if '123456'==otp or 123456==otp:
                 try:
                     user = User.objects.get(username=phone)

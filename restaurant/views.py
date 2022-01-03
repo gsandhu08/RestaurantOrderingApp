@@ -69,7 +69,7 @@ class RestaurantDetailView(ModelViewSet):
         try:
             search_query= request.GET.get('location')
             queryset = RestaurantList.objects.filter(city=search_query)
-            serializer= RestDetailSerializer(queryset)
+            serializer= RestDetailSerializer(queryset, many=True)
             data={'status':True,
                     'data': serializer.data,
                     'error': None}

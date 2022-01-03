@@ -85,7 +85,7 @@ class CustomerView(ModelViewSet):
             if '123456'==otp or 123456==otp:
                 try:
                     user = User.objects.get(username=phone)
-                    customer=Customer.objects.get(mobile=phone)
+                    customer=Customer.objects.create(mobile=phone)
                     customer=CustomerSerializer(customer)
                     token = AccessToken(user)
                     data = {

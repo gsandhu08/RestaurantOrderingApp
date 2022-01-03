@@ -8,7 +8,7 @@ class Customer(models.Model):
     email = models.EmailField()
     profile_picture = models.ImageField(upload_to='images/customer')
     dob = models.DateField()
-    mobile = models.CharField(max_length=10)
+    mobile = models.CharField(max_length=10,unique=True)
     address = models.TextField()
     gender = models.CharField(max_length=1,choices=gender_choices,default='M')
     nationality = models.CharField(max_length=20)

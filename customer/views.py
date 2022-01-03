@@ -54,15 +54,67 @@ class CustomerView(ModelViewSet):
             return Response(data)
         except Exception as e:
             return Response(str(e))
+
+    @action(methods=['get'], detail=False)
+    def signup(self,request):
+        try:
+            phone=request.GET.get('phone')
+            user=User.objects.get(username=phone)
+            data = {
+                'status':True,
+                'data':'OTP Sent',
+                'error':None
+            }
+            return Response(data)
+        except Exception as e:
+            phone=request.GET.get('phone')
+            user=User.objects.create_user(username=phone,password='password')
+            data = {
+                'status':True,
+                'data':'OTP Sent',
+                'error':None
+            }
+            return Response(data)
+
     
     @action(detail=False, methods=['POST'])
     def login(self,request):
         try:
-            data = request.data
-            otp= '123456'
-            if request.data.get('otp')==otp:
-                user = User.objects.create_user(username=data.get('mobile'),password='password')
-                user.save()
-            return Response(str(AccessToken.for_user(user)))
+            data=request.data
+            phone = data.get('phone')
+            otp=data.get('otp')
+            if '123456'==otp or 123456==otp:
+                try:
+                    user = User.objects.get(username=phone)
+                    customer=Customer.objects.get(mobile=phone)
+                    customer=CustomerSerializer(customer)
+                    token = AccessToken(user)
+                    data = {
+                        'status':True,
+                        'data':token,
+                        'user':customer.data,
+                        'error':None
+                    }
+                    return Response(data)
+                except Exception as e:
+                    data = {
+                        'status':False,
+                        'data':'User not found',
+                        'error':str(e)
+                    }
+                    return Response(data)
+            else:
+                data = {
+                    'status':False,
+                    'data':'Invalid OTP',
+                    'error':None
+                }
+                return Response(data)
         except Exception as e:
-            return Response(str(e))
+            data = {
+                'status':False,
+                'data':'Something went wrong',
+                'error':str(e)
+            }
+            return Response(data)
+            

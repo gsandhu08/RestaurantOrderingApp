@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken
 from rest_framework.response import Response
@@ -9,12 +9,14 @@ from .models import Customer
 from .serializers import CustomerSerializer
 from datetime import datetime
 import sys
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
 class CustomerView(ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAuthenticated]
     
     def create(self,request):
         try:
@@ -55,7 +57,36 @@ class CustomerView(ModelViewSet):
         except Exception as e:
             return Response(str(e))
 
-    @action(methods=['get'], detail=False)
+    def update(self, request, *args, **kwargs):
+        user=request.user
+        try:
+            rawData = request.data
+            # dob = rawData.get('dob').split('-')
+            # dob = datetime(int(dob[0]),int(dob[1]),int(dob[2]))
+            # rawData['dob']=dob
+            data = rawData
+            serializer = CustomerSerializer(user, data=data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data = {'status': True,
+                    'data': serializer.data,
+                    'error':None
+            }
+            return Response(data)
+        except Exception as e:
+            exception_type, exception_object, exception_traceback = sys.exc_info()
+            filename = exception_traceback.tb_frame.f_code.co_filename
+            line_number = exception_traceback.tb_lineno
+            data= {
+                'status': False,
+                'data': [],
+                'error': str(e),
+                'line_number':line_number,
+            }
+            
+            return Response(data)
+
+    @action(methods=['get'], detail=False,permission_classes=[])
     def signup(self,request):
         try:
             phone=request.GET.get('phone')
@@ -77,7 +108,7 @@ class CustomerView(ModelViewSet):
             return Response(data)
 
     
-    @action(detail=False, methods=['POST'])
+    @action(detail=False, methods=['POST'], permission_classes=[])
     def login(self,request):
         try:
             phone=request.GET.get('phone')

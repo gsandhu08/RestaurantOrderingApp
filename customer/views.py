@@ -57,34 +57,34 @@ class CustomerView(ModelViewSet):
         except Exception as e:
             return Response(str(e))
 
-    def update(self, request, *args, **kwargs):
-        user=request.user
-        try:
-            rawData = request.data
-            # dob = rawData.get('dob').split('-')
-            # dob = datetime(int(dob[0]),int(dob[1]),int(dob[2]))
-            # rawData['dob']=dob
-            data = rawData
-            serializer = CustomerSerializer(user, data=data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            data = {'status': True,
-                    'data': serializer.data,
-                    'error':None
-            }
-            return Response(data)
-        except Exception as e:
-            exception_type, exception_object, exception_traceback = sys.exc_info()
-            filename = exception_traceback.tb_frame.f_code.co_filename
-            line_number = exception_traceback.tb_lineno
-            data= {
-                'status': False,
-                'data': [],
-                'error': str(e),
-                'line_number':line_number,
-            }
+    # def update(self, request, *args, **kwargs):
+    #     user=request.user
+    #     try:
+    #         rawData = request.data
+    #         # dob = rawData.get('dob').split('-')
+    #         # dob = datetime(int(dob[0]),int(dob[1]),int(dob[2]))
+    #         # rawData['dob']=dob
+    #         data = rawData
+    #         serializer = CustomerSerializer(user, data=data, partial=True)
+    #         serializer.is_valid(raise_exception=True)
+    #         serializer.save()
+    #         data = {'status': True,
+    #                 'data': serializer.data,
+    #                 'error':None
+    #         }
+    #         return Response(data)
+    #     except Exception as e:
+    #         exception_type, exception_object, exception_traceback = sys.exc_info()
+    #         filename = exception_traceback.tb_frame.f_code.co_filename
+    #         line_number = exception_traceback.tb_lineno
+    #         data= {
+    #             'status': False,
+    #             'data': [],
+    #             'error': str(e),
+    #             'line_number':line_number,
+    #         }
             
-            return Response(data)
+    #         return Response(data)
 
     @action(methods=['get'], detail=False,permission_classes=[])
     def signup(self,request):

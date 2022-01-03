@@ -64,17 +64,21 @@ class RestaurantDetailView(ModelViewSet):
             }
         return Response(data)
 
-    @action (detail=False, methods=['GET'])
+    @action (detail=False, methods=['GET'], permission_classes=[])
     def location_search(self,request):
-        cities = RestaurantList.objects.get('city')
-        search_query= request.GET.get('location')
-        for i in cities:
-            if search_query==cities[i]:
-                selected= cities[i]
-        data={'status':True,
-                'data': selected,
-                'error': None}
-        return Response(data)
+        try:
+            cities = RestaurantList.objects.get('city')
+            search_query= request.GET.get('location')
+            for i in cities:
+                print(cities[i])
+                if search_query==cities[i]:
+                    selected= cities[i]
+            data={'status':True,
+                    'data': selected,
+                    'error': None}
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
         
 
 class PartnerView(ModelViewSet):

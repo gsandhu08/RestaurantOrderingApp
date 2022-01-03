@@ -19,6 +19,7 @@ class RestaurantList(models.Model):
     created_date = models.DateTimeField(auto_now_add=True,editable=False)
     updated_date = models.DateTimeField(auto_now=True,editable=True)
     category = models.CharField(max_length=30, default=None, null=True)
+    city= models.CharField(max_length=15, default=None, null=True)
 
 gender_choices = (('M','Male'),('F','Female'),)
 

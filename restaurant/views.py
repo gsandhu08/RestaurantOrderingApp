@@ -64,12 +64,18 @@ class RestaurantDetailView(ModelViewSet):
             }
         return Response(data)
 
-    # @action (detail=False, methods=['GET'])
-    # def search(self,request):
-    #     data = RestaurantList.objects.all()
-    #     query= request.GET.get('query')
-    #     data_serializer = RestDetailSerializer(data, many=True)
-    #     data=
+    @action (detail=False, methods=['GET'])
+    def location_search(self,request):
+        cities = RestaurantList.objects.get('city')
+        search_query= request.GET.get('location')
+        for i in cities:
+            if search_query==cities[i]:
+                selected= cities[i]
+        data={'status':True,
+                'data': selected,
+                'error': None}
+        return Response(data)
+        
 
 class PartnerView(ModelViewSet):
     queryset = RestaurantOwner.objects.all()

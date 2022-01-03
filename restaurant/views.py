@@ -64,6 +64,7 @@ class RestaurantDetailView(ModelViewSet):
             }
         return Response(data)
 
+# location search
     @action (detail=False, methods=['GET'], permission_classes=[])
     def location_search(self,request):
         try:

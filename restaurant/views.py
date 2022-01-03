@@ -67,14 +67,10 @@ class RestaurantDetailView(ModelViewSet):
     @action (detail=False, methods=['GET'], permission_classes=[])
     def location_search(self,request):
         try:
-            cities = RestaurantList.objects.get('city')
             search_query= request.GET.get('location')
-            for i in cities:
-                print(cities[i])
-                if search_query==cities[i]:
-                    selected= cities[i]
+            cities = RestaurantList.objects.filter('city'==search_query)
             data={'status':True,
-                    'data': selected,
+                    'data': cities,
                     'error': None}
             return Response(data)
         except Exception as e:

@@ -81,6 +81,7 @@ class RestaurantDetailView(ModelViewSet):
         except Exception as e:
             return Response(str(e))
     
+    @action (detail=False, methods=['GET'], permission_classes=[])
     def name_search(self,request):
         try:
             search_query = request.GET.get("name")

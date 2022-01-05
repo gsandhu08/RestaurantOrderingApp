@@ -2,9 +2,13 @@ from rest_framework import serializers
 from .models import RestaurantList, RestaurantOwner, Order, MenuItems
 
 class RestDetailSerializer(serializers.ModelSerializer):
+    email_test=serializers.SerializerMethodField()
+    def get_email_test(self,instance):
+        return str(type(instance.email))
     class Meta:
         model= RestaurantList
         fields = '__all__'
+        extra_field= ['email_test']
 
 class PartnerSerializer(serializers.ModelSerializer):
     class Meta:

@@ -296,7 +296,7 @@ class NewRestaurantViewSet(ModelViewSet):
         try:
             if request.GET.get('password')!='password':
                 return Response('Invalid password')
-            user = User.objects.get(username=mobile)
+            user = User.objects.get(username=int(mobile))
             data= NewRestaurant.objects.get(owner=user.id)
             serializer= NewRestaurantSerializer(data)
             token= AccessToken.for_user(user)

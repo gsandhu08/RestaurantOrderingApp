@@ -169,7 +169,7 @@ class PartnerView(ModelViewSet):
                 email= serializer.data.get('email')
                 model= RestaurantList.objects.filter(email=email)
                 rest_serializer= RestDetailSerializer(model, many=True)
-                rest_name= rest_serializer.data['name']
+                rest_name= rest_serializer.data.get('name', None)
                 data= {
                 'status': True,
                 'data': rest_name,

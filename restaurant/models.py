@@ -39,13 +39,13 @@ class NewMenuItems(models.Model):
     restaurant = models.ForeignKey(NewRestaurant, on_delete=models.DO_NOTHING)
 
 
-# class Order(models.Model):
-#     created_date = models.DateTimeField(auto_now_add=True,editable=False)
-#     updated_date = models.DateTimeField(auto_now=True, editable=True)
-#     rest_id= models.ForeignKey(RestaurantList, on_delete=models.DO_NOTHING)
-#     customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-#     total_amount = models.IntegerField()
-#     list_of_items= models.TextField(default=None,null=True)
-#     status = models.TextField(default='New')
+class Order(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True,editable=False)
+    updated_date = models.DateTimeField(auto_now=True, editable=True)
+    rest_id= models.ForeignKey(NewRestaurant, on_delete=models.DO_NOTHING)
+    customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    total_amount = models.IntegerField()
+    list_of_items= models.TextField(default=None,null=True)
+    status = models.TextField(default='New')
 
 

@@ -1,89 +1,16 @@
 
-from django.db.models import query
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from rest_framework.viewsets import ModelViewSet
 # from .models import NewRestaurant, RestaurantList, MenuItems, Order, RestaurantOwner
-# from .serializers import NewRestaurantSerializer, RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
 import sys
 from django.contrib.auth.models import User
-from .models import NewMenuItems, NewRestaurant
-from .serializers import NewMenuItemsSerializer, NewRestaurantSerializer
+from .models import NewMenuItems, NewRestaurant, Order
+from .serializers import NewMenuItemsSerializer, NewRestaurantSerializer, OrderSerializer, OrderSerializer_create
 from rest_framework.decorators import action
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken
 from rest_framework.permissions import IsAuthenticated
-
-# # Create your views here.
-# 
-# 
-# 
-        
-# #test
-
-# class OrderView(ModelViewSet):
-#     queryset = Order.objects.all()
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated]
-#     def create(self,request):
-#         try:
-#             rawData = request.data
-#             serializer = OrderSerializer_create(data=rawData)
-#             serializer.is_valid(raise_exception=True)
-#             serializer.save()
-#             data = {'status': True,
-#                     'data': serializer.data,
-#                     'error':None
-#             }
-#             return Response(data)
-#         except Exception as e:
-#             return Response(str(e))
-    
-#     def list(self,request):
-#         try:
-#             data = request.GET.get('status')
-#             queryset = Order.objects.filter(status=data)
-#             serializer = OrderSerializer(queryset,many=True)
-#             return Response(serializer.data)
-#         except Exception as e:
-#             return Response(str(e))
-
-#     def patch(self,request, *args, **kwargs):
-#         try:
-#             instance = self.get_object()
-#             data = request.data
-#             serializer = OrderSerializer(instance, data, partial = True)
-#             serializer.is_valid(raise_exception=True)
-#             serializer.save()
-#             return Response(serializer.data)
-#         except Exception as e:
-#             return Response(str(e))
-
-#     @action (detail= False, methods=['GET'])
-#     def status(self,request):
-#         status= request.GET.get('status')
-#         if status == 'previous':
-#             queryset = Order.objects.filter(status='Delivered')
-#         else:
-#             queryset = Order.objects.exclude(status ='Delivered')
-#         serializer = OrderSerializer(queryset,many=True)
-#         return Response(serializer.data)    
-
-#     @action(detail=False,methods=['GET'])
-#     def order_history(self,request):
-#         id= request.GET.get('id')
-#         data= Order.objects.filter(rest_id=id)
-#         serializer = OrderSerializer(data, many=True)
-#         data={
-#             'status':True,
-#             'data': serializer.data,
-#             'error':False
-#         }
-#         return Response(data)
-
-
-
 
 
 class NewRestaurantViewSet(ModelViewSet):
@@ -184,3 +111,64 @@ class MenuItemsView(ModelViewSet):
             return Response(serializer.data)
         except Exception as e:
             return Response(str(e))
+
+class OrderView(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    def create(self,request):
+        try:
+            rawData = request.data
+            serializer = OrderSerializer_create(data=rawData)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data = {'status': True,
+                    'data': serializer.data,
+                    'error':None
+            }
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
+    
+    def list(self,request):
+        try:
+            data = request.GET.get('status')
+            queryset = Order.objects.filter(status=data)
+            serializer = OrderSerializer(queryset,many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))
+
+    def patch(self,request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            data = request.data
+            serializer = OrderSerializer(instance, data, partial = True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))
+
+    @action (detail= False, methods=['GET'])
+    def status(self,request):
+        status= request.GET.get('status')
+        if status == 'previous':
+            queryset = Order.objects.filter(status='Delivered')
+        else:
+            queryset = Order.objects.exclude(status ='Delivered')
+        serializer = OrderSerializer(queryset,many=True)
+        return Response(serializer.data)    
+
+    @action(detail=False,methods=['GET'])
+    def order_history(self,request):
+        id= request.GET.get('id')
+        data= Order.objects.filter(rest_id=id)
+        serializer = OrderSerializer(data, many=True)
+        data={
+            'status':True,
+            'data': serializer.data,
+            'error':False
+        }
+        return Response(data)
+

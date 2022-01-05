@@ -59,7 +59,7 @@ class NewRestaurantViewSet(ModelViewSet):
             'error':str(e)}
             return Response(data)
 
-    @action (detail=False,methods=['GET'], permission_classes=[])
+    @action (detail=False,methods=['GET'])
     def restaurants(self,request):
         data = NewRestaurant.objects.values_list('id','name','profile_picture')
         data={
@@ -68,7 +68,7 @@ class NewRestaurantViewSet(ModelViewSet):
             }
         return Response(data)
 
-    @action (detail=False, methods=['GET'], permission_classes=[])
+    @action (detail=False, methods=['GET'])
     def location_search(self,request):
         try:
             search_query= request.GET.get('location')
@@ -83,7 +83,7 @@ class NewRestaurantViewSet(ModelViewSet):
         except Exception as e:
             return Response(str(e))
     
-    @action (detail=False, methods=['GET'], permission_classes=[])
+    @action (detail=False, methods=['GET'])
     def name_search(self,request):
         try:
             search_query = request.GET.get("name")

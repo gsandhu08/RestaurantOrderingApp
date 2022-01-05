@@ -302,7 +302,7 @@ class NewRestaurantViewSet(ModelViewSet):
             token= AccessToken.for_user(user)
             data= {
                 'status': True,
-                'data':serializer.data,
+                'restaurant_data':serializer.data,
                 'token': str(token),
                 'error': False
             }

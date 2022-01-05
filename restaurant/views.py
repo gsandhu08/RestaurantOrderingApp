@@ -161,7 +161,7 @@ class PartnerView(ModelViewSet):
                 return Response(data)
         else:
             data={'status':True,
-            'data':'Something went wrong',
+            'data':'Account does not exist',
             'error':False}
             return Response(data)
             

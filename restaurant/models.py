@@ -1,25 +1,10 @@
 from django.db import models
+from django.db.models.deletion import DO_NOTHING
 from phone_field import PhoneField
 from customer.models import Customer
 
 # Create your models here.
-class RestaurantList(models.Model):
-    profile_picture = models.ImageField(upload_to='images/restaurant')
-    name = models.CharField(max_length=30)
-    address = models.TextField()
-    owner_name = models.CharField(max_length=30)
-    contact_person = models.CharField(max_length=30)
-    mobile = PhoneField(blank=True, help_text='Contact phone number')
-    email = models.EmailField(null=True)
-    opening_time = models.TimeField(null=True)
-    closing_time = models.TimeField(null=True)
-    rating = models.IntegerField(null=True)
-    active = models.BooleanField(default=False)
-    disable = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now_add=True,editable=False)
-    updated_date = models.DateTimeField(auto_now=True,editable=True)
-    category = models.CharField(max_length=30, default=None, null=True)
-    city= models.CharField(max_length=15, default=None, null=True)
+
 
 gender_choices = (('M','Male'),('F','Female'),)
 
@@ -32,6 +17,24 @@ class RestaurantOwner(models.Model):
     gender = models.CharField(max_length=1,choices=gender_choices,default='M')
     created_date = models.DateTimeField(auto_now_add=True,editable=False)
     updated_date = models.DateTimeField(auto_now=True, editable=True)
+
+class RestaurantList(models.Model):
+    profile_picture = models.ImageField(upload_to='images/restaurant')
+    name = models.CharField(max_length=30)
+    address = models.TextField()
+    owner_name = models.CharField(max_length=30)
+    contact_person = models.CharField(max_length=30)
+    mobile = PhoneField(blank=True, help_text='Contact phone number')
+    email = models.ForeignKey(RestaurantOwner,on_delete=models.DO_NOTHING)
+    opening_time = models.TimeField(null=True)
+    closing_time = models.TimeField(null=True)
+    rating = models.IntegerField(null=True)
+    active = models.BooleanField(default=False)
+    disable = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True,editable=False)
+    updated_date = models.DateTimeField(auto_now=True,editable=True)
+    category = models.CharField(max_length=30, default=None, null=True)
+    city= models.CharField(max_length=15, default=None, null=True)
 
 class MenuItems(models.Model):
     name = models.CharField(max_length=30)

@@ -116,7 +116,7 @@ class PartnerView(ModelViewSet):
                     10:{'username':'9585756555','password':'password'},
                     11:{'username':'9686766656','password':'password'}
             }
-            for i in [1,2,3,4]:
+            for i in [1,2,3,4,5,6,7,8,9,10,11]:
                 if data.get('mobile')==users[i]['username']:
                     user= User.objects.create_user(username=users[i]['username'],password=users[i]['password'])
                     user.save()
@@ -160,7 +160,7 @@ class PartnerView(ModelViewSet):
             }
         phone = request.data.get('mobile')
         password= request.data.get('password')
-        for i in [1,2,3,4]:
+        for i in [1,2,3,4,5,6,7,8,9,10,11]:
             if phone==users[i]['username'] and password==users[i]['password']:
                 user = User.objects.get(username= phone)
                 data= RestaurantOwner.objects.get(mobile=phone)

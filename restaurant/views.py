@@ -167,12 +167,12 @@ class PartnerView(ModelViewSet):
                 serializer= PartnerSerializer(data)
                 token= AccessToken.for_user(user)
                 email= serializer.data.get('email')
-                model= RestaurantList.objects.filter(email=email)
-                rest_serializer= RestDetailSerializer(model)
-                rest_name= rest_serializer.data.get('name')
+                # model= RestaurantList.objects.filter(email=email)
+                # rest_serializer= RestDetailSerializer(model, many=True)
+                # rest_name= rest_serializer.data.get('name')
                 data= {
                 'status': True,
-                'data': rest_name,
+                'data': email,
                 'token': str(token),
                 'error': False
                     }

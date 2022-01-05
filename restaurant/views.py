@@ -243,3 +243,15 @@ class OrderView(ModelViewSet):
             queryset = Order.objects.exclude(status ='Delivered')
         serializer = OrderSerializer(queryset,many=True)
         return Response(serializer.data)    
+
+    @action(detail=False,methods=['GET'])
+    def order_history(self,request):
+        id= request.GET.get('id')
+        data= Order.objects.filter(rest_id=id)
+        serializer = OrderSerializer(data, many=True)
+        data={
+            'status':True,
+            'data': serializer.data,
+            'error':False
+        }
+        return Response(data)

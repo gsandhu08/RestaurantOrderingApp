@@ -104,10 +104,17 @@ class PartnerView(ModelViewSet):
     def create(self,request):
         try:
             data = request.data
-            users= {1:{'username':'9876501234','password':'abcd'},
-                    2:{'username':'9887766550','password':'mnop'},
-                    3:{'username':'9876655443','password':'qrst'},
-                    4:{'username':'9876543201','password':'xyz'},
+            users= {1:{'username':'9876501234','password':'password'},
+                    2:{'username':'9887766550','password':'password'},
+                    3:{'username':'9876655443','password':'password'},
+                    4:{'username':'9876543201','password':'password'},
+                    5:{'username':'9080706050','password':'password'},
+                    6:{'username':'9181716151','password':'password'},
+                    7:{'username':'9282726252','password':'password'},
+                    8:{'username':'9383736353','password':'password'},
+                    9:{'username':'9484746454','password':'password'},
+                    10:{'username':'9585756555','password':'password'},
+                    11:{'username':'9686766656','password':'password'}
             }
             for i in [1,2,3,4]:
                 if data.get('mobile')==users[i]['username']:
@@ -139,10 +146,17 @@ class PartnerView(ModelViewSet):
 
     @action(detail=False, methods=['POST'])
     def signup(self,request):
-        users= {1:{'username':'9876501234','password':'abcd'},
-                    2:{'username':'9887766550','password':'mnop'},
-                    3:{'username':'9876655443','password':'qrst'},
-                    4:{'username':'9876543201','password':'xyz'},
+        users= {1:{'username':'9876501234','password':'password'},
+                    2:{'username':'9887766550','password':'password'},
+                    3:{'username':'9876655443','password':'password'},
+                    4:{'username':'9876543201','password':'password'},
+                    5:{'username':'9080706050','password':'password'},
+                    6:{'username':'9181716151','password':'password'},
+                    7:{'username':'9282726252','password':'password'},
+                    8:{'username':'9383736353','password':'password'},
+                    9:{'username':'9484746454','password':'password'},
+                    10:{'username':'9585756555','password':'password'},
+                    11:{'username':'9686766656','password':'password'}
             }
         phone = request.data.get('mobile')
         password= request.data.get('password')

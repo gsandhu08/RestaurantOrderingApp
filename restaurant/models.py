@@ -36,6 +36,7 @@ class RestaurantList(models.Model):
     updated_date = models.DateTimeField(auto_now=True,editable=True)
     category = models.CharField(max_length=30, default=None, null=True)
     city= models.CharField(max_length=15, default=None, null=True)
+    
 
 class MenuItems(models.Model):
     name = models.CharField(max_length=30)

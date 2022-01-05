@@ -104,11 +104,34 @@ class PartnerView(ModelViewSet):
     def create(self,request):
         try:
             data = request.data
-            user = User.objects.create_user(username=str(data.get('mobile')),password='password')
-            user.save()
+            users= {1:{'username':'9876501234','password':'abcd'},
+                    2:{'username':'9887766550','password':'mnop'},
+                    3:{'username':'9876655443','password':'qrst'},
+                    4:{'username':'9876543201','password':'xyz'},
+            }
+            for i in [1,2,3,4]:
+                if data.get('mobile')==users[i]['username']:
+                    user= User.objects.create_user(username=users[i]['username'],password=users[i]['password'])
+                    user.save()
+                    print('user saved')
+                    serializer = PartnerSerializer(data= data)
+                    serializer.is_valid(raise_exception= True)
+                    serializer.save()
+                    print('serializer saved')
+            # user = User.objects.create_user(username=str(data.get('mobile')),password='password')
+            # user.save()
             return Response({'status':'user created'})
         except Exception as e:
-            return Response(str(e))
+            exception_type, exception_object, exception_traceback = sys.exc_info()
+            filename = exception_traceback.tb_frame.f_code.co_filename
+            line_number = exception_traceback.tb_lineno
+            data= {
+                'status': False,
+                'data': [],
+                'error': str(e)
+            }
+            print(filename,line_number)
+            return Response('this is an exception'+str(e))
     # def list(self,request):
     #     data= User.objects.all()
     #     serializer = Serializer(data, many=True)
@@ -116,9 +139,33 @@ class PartnerView(ModelViewSet):
 
     @action(detail=False, methods=['POST'])
     def signup(self,request):
+        users= {1:{'username':'9876501234','password':'abcd'},
+                    2:{'username':'9887766550','password':'mnop'},
+                    3:{'username':'9876655443','password':'qrst'},
+                    4:{'username':'9876543201','password':'xyz'},
+            }
         phone = request.data.get('mobile')
-        user = User.objects.get(username= str(phone))
-        return Response(str(AccessToken.for_user(user)))
+        password= request.data.get('password')
+        for i in [1,2,3,4]:
+            if phone==users[i]['username'] and password==users[i]['password']:
+                user = User.objects.get(username= phone)
+                data= RestaurantOwner.objects.get(mobile=phone)
+                serializer= PartnerSerializer(data)
+                token= AccessToken.for_user(user)
+                data= {
+                'status': True,
+                'data': serializer.data.get('name'),
+                'token': str(token),
+                'error': False
+                    }
+                return Response(data)
+        else:
+            data={'status':True,
+            'data':'Something went wrong',
+            'error':False}
+            return Response(data)
+            
+                # return Response(str(AccessToken.for_user(user)))
 
 class MenuItemsView(ModelViewSet):
     queryset = MenuItems.objects.all()

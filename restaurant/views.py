@@ -306,8 +306,8 @@ class NewRestaurantViewSet(ModelViewSet):
                 'token': str(token),
                 'error': False
             }
-        except:
+        except Exception as e:
             data={'status':False,
             'data':'Account does not exist',
-            'error':False}
+            'error':str(e)}
             return Response(data)

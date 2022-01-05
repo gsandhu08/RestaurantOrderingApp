@@ -270,7 +270,7 @@ from rest_framework.permissions import IsAuthenticated
 class NewRestaurantViewSet(ModelViewSet):
     queryset=NewRestaurant.objects.all()
     serializer_class= NewRestaurantSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def create(self,request):
         try:

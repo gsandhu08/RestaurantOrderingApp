@@ -292,7 +292,7 @@ class NewRestaurantViewSet(ModelViewSet):
 
     @action(detail=False,methods=['GET'])
     def login(self,request):
-        mobile= request.GET.get('mobile')
+        mobile= request.GET.get('username')
         try:
             if request.GET.get('password')!='password':
                 return Response('Invalid password')

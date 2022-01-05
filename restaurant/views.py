@@ -8,8 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 # from .serializers import NewRestaurantSerializer, RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
 import sys
 from django.contrib.auth.models import User
-from .models import NewRestaurant
-from .serializers import NewRestaurantSerializer
+from .models import NewMenuItems, NewRestaurant
+from .serializers import NewMenuItemsSerializer, NewRestaurantSerializer
 from rest_framework.decorators import action
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken
@@ -18,18 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 # # Create your views here.
 # 
 # 
-# class MenuItemsView(ModelViewSet):
-#     queryset = MenuItems.objects.all()
-#     serializer_class = MenuItemsSerializer
-#     # permission_classes = [IsAuthenticated]
-#     def list(self, request, *args, **kwargs):
-#         try:
-#             data = request.GET.get('restaurant')
-#             queryset =MenuItems.objects.filter(restaurant=data)
-#             serializer = MenuItemsSerializer(queryset,many=True)
-#             return Response(serializer.data)
-#         except Exception as e:
-#             return Response(str(e))
+# 
         
 # #test
 
@@ -181,4 +170,17 @@ class NewRestaurantViewSet(ModelViewSet):
             return Response(data)
         except Exception as e:
             return Response(str(e))
-        
+
+
+class MenuItemsView(ModelViewSet):
+    queryset = NewMenuItems.objects.all()
+    serializer_class = NewMenuItemsSerializer
+    # permission_classes = [IsAuthenticated]
+    def list(self, request, *args, **kwargs):
+        try:
+            data = request.GET.get('restaurant')
+            queryset =NewMenuItems.objects.filter(restaurant=data)
+            serializer = NewMenuItemsSerializer(queryset,many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(str(e))

@@ -2,31 +2,6 @@ from rest_framework import serializers
 # from .models import RestaurantList, RestaurantOwner, Order, MenuItems
 from .models import NewMenuItems, NewRestaurant
 
-# class RestDetailSerializer(serializers.ModelSerializer):
-#     email_test=serializers.SerializerMethodField()
-#     def get_email_test(self,instance):
-#         return str(type(instance.email))
-#     class Meta:
-#         model= RestaurantList
-#         fields = '__all__'
-#         extra_field= ['email_test']
-
-# class PartnerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = RestaurantOwner
-#         fields = '__all__'
-
-
-# class MenuItemsSerializer(serializers.ModelSerializer):
-#     restname = serializers.SerializerMethodField()
-#     def get_restname(self,instance):
-#         return instance.restaurant.name
-#     # restaurant = RestDetailSerializer()
-    
-#     class Meta:
-#         model = MenuItems
-#         fields = '__all__'
-#         extra_fields = ['restname']
 
 # class OrderSerializer(serializers.ModelSerializer):
 #     list_of_items = serializers.SerializerMethodField(read_only=True)
@@ -60,10 +35,6 @@ class NewRestaurantSerializer(serializers.ModelSerializer):
         model = NewRestaurant
         fields = '__all__'
 
-# class NewRestaurantOwnerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = NewRestaurantOwner
-#         fields = '__all__'
 
 class NewMenuItemsSerializer(serializers.ModelSerializer):
     class Meta:

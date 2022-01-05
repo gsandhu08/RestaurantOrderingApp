@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 # from restaurant.views import RestaurantDetailView, PartnerView, MenuItemsView, OrderView,
-from restaurant.views import NewRestaurantViewSet
+from restaurant.views import MenuItemsView, NewRestaurantViewSet
 # from customer.views import CustomerView
 from django.urls.conf import include
 
@@ -26,7 +26,7 @@ router = SimpleRouter()
 # router.register('restaurantdetail', RestaurantDetailView)
 # router.register('customer', CustomerView)
 # router.register('partner', PartnerView)
-# router.register('menuitems', MenuItemsView)
+router.register('menuitems', MenuItemsView)
 # router.register('order', OrderView)
 router.register('restaurantdetail', NewRestaurantViewSet)
 urlpatterns = [

@@ -312,3 +312,12 @@ class NewRestaurantViewSet(ModelViewSet):
             'data':'Account does not exist',
             'error':str(e)}
             return Response(data)
+
+    @action (detail=False,methods=['GET'], permission_classes=[])
+    def restaurants(self,request):
+        data = NewRestaurant.objects.values_list('id','name','profile_picture')
+        data={
+                'status': True,
+                'data' : data
+            }
+        return Response(data)

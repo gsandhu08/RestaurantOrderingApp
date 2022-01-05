@@ -28,7 +28,7 @@ router = SimpleRouter()
 # router.register('partner', PartnerView)
 # router.register('menuitems', MenuItemsView)
 # router.register('order', OrderView)
-router.register('newrestaurant', NewRestaurantViewSet)
+router.register('restaurantdetail', NewRestaurantViewSet)
 urlpatterns = [
     path('',include(router.urls)),
     

@@ -291,7 +291,7 @@ class NewRestaurantViewSet(ModelViewSet):
     
 
     @action(detail=False,methods=['GET'])
-    def login(self,request):
+    def signup(self,request):
         mobile= request.GET.get('username')
         try:
             if request.GET.get('password')!='password':

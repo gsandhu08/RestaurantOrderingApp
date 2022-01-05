@@ -25,7 +25,7 @@ class RestaurantList(models.Model):
     owner_name = models.CharField(max_length=30)
     contact_person = models.CharField(max_length=30)
     mobile = PhoneField(blank=True, help_text='Contact phone number')
-    email = models.ForeignKey(RestaurantOwner,on_delete=models.DO_NOTHING)
+    email = models.ForeignKey(RestaurantOwner,on_delete=models.DO_NOTHING, null=True)
     opening_time = models.TimeField(null=True)
     closing_time = models.TimeField(null=True)
     rating = models.IntegerField(null=True)

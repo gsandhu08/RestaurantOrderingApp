@@ -8,8 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 # from .serializers import NewRestaurantSerializer, RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
 import sys
 from django.contrib.auth.models import User
-from models import NewRestaurant
-from serializers import NewRestaurantSerializer
+from .models import NewRestaurant
+from .serializers import NewRestaurantSerializer
 from rest_framework.decorators import action
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken

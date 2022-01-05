@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import RestaurantList, RestaurantOwner, Order, MenuItems
+from .models import NewMenuItems, NewRestaurant, NewRestaurantOwner
 
 class RestDetailSerializer(serializers.ModelSerializer):
     email_test=serializers.SerializerMethodField()
@@ -50,4 +51,21 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderSerializer_create(serializers.ModelSerializer):
     class Meta:
         model = Order
+        fields = '__all__'
+
+
+
+class NewRestaurantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewRestaurant
+        fields = '__all__'
+
+class NewRestaurantOwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewRestaurantOwner
+        fields = '__all__'
+
+class NewMenuItemsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewMenuItems
         fields = '__all__'

@@ -1,10 +1,11 @@
 
+from django.db.models import query
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from rest_framework.viewsets import ModelViewSet
-from .models import RestaurantList, MenuItems, Order, RestaurantOwner
-from .serializers import RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
+from .models import NewRestaurant, RestaurantList, MenuItems, Order, RestaurantOwner
+from .serializers import NewRestaurantSerializer, RestDetailSerializer, PartnerSerializer, MenuItemsSerializer, OrderSerializer, OrderSerializer_create
 import sys
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
@@ -259,3 +260,52 @@ class OrderView(ModelViewSet):
             'error':False
         }
         return Response(data)
+
+
+
+
+
+class NewRestaurantViewSet(ModelViewSet):
+    queryset=NewRestaurant.objects.all()
+    serializer_class= NewRestaurantSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self,request):
+        try:
+            rawData = request.data
+            user=User.objects.create(username=rawData['mobile'],password='password')
+            user.save()
+            rawData['owner']=user.id
+            serializer = NewRestaurantSerializer(data=rawData)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            data = {'status': True,
+                    'data': serializer.data,
+                    'error':None
+            }
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
+    
+
+    @action(detail=False,methods=['GET'])
+    def login(self,request):
+        mobile= request.GET.get('mobile')
+        try:
+            if request.data.get('password')!='password':
+                return Response('Invalid password')
+            user = User.objects.get(username=mobile)
+            data= NewRestaurant.objects.get(user=user.id)
+            serializer= NewRestaurantSerializer(data)
+            token= AccessToken.for_user(user)
+            data= {
+                'status': True,
+                'data':serializer.data,
+                'token': str(token),
+                'error': False
+            }
+        except:
+            data={'status':False,
+            'data':'Account does not exist',
+            'error':False}
+            return Response(data)

@@ -54,7 +54,7 @@ class RestaurantDetailView(ModelViewSet):
         except Exception as e:
             return Response(str(e))
 
-    @action (detail=False,methods=['GET'])
+    @action (detail=False,methods=['GET'], permission_classes=[])
     def restaurants(self,request):
         data = RestaurantList.objects.values_list('id','name','profile_picture')
         # data_serializer = RestDetailSerializer(data, many=True)
@@ -123,7 +123,7 @@ class PartnerView(ModelViewSet):
 class MenuItemsView(ModelViewSet):
     queryset = MenuItems.objects.all()
     serializer_class = MenuItemsSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     def list(self, request, *args, **kwargs):
         try:
             data = request.GET.get('restaurant')

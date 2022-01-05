@@ -321,3 +321,34 @@ class NewRestaurantViewSet(ModelViewSet):
                 'data' : data
             }
         return Response(data)
+
+    @action (detail=False, methods=['GET'], permission_classes=[])
+    def location_search(self,request):
+        try:
+            search_query= request.GET.get('location')
+            queryset = NewRestaurant.objects.filter(city__contains=search_query)
+            serializer= NewRestaurantSerializer(queryset, many=True)
+            data={
+                    'status':True,
+                    'data': serializer.data,
+                    'error': None
+                    }
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
+    
+    @action (detail=False, methods=['GET'], permission_classes=[])
+    def name_search(self,request):
+        try:
+            search_query = request.GET.get("name")
+            queryset = NewRestaurant.objects.filter(name__contains=search_query)
+            serializer = NewRestaurantSerializer(queryset, many = True)
+            data = {
+                'status':True,
+                'data': serializer.data,
+                'error': None
+            }
+            return Response(data)
+        except Exception as e:
+            return Response(str(e))
+        

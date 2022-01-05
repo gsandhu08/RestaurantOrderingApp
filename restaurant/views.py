@@ -294,7 +294,7 @@ class NewRestaurantViewSet(ModelViewSet):
     def login(self,request):
         mobile= request.GET.get('mobile')
         try:
-            if request.data.get('password')!='password':
+            if request.GET.get('password')!='password':
                 return Response('Invalid password')
             user = User.objects.get(username=mobile)
             data= NewRestaurant.objects.get(owner=user.id)

@@ -5,6 +5,9 @@ from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import SlidingToken,AccessToken
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from restaurant.models import Order
+from restaurant.serializers import OrderSerializer
 from .models import Customer
 from .serializers import CustomerSerializer
 from datetime import datetime
@@ -151,3 +154,15 @@ class CustomerView(ModelViewSet):
             }
             return Response(data)
             
+
+    @action(detail=False,methods=['GET'])
+    def order_history(self,request):
+        id= request.GET.get('id')
+        data= Order.objects.filter(customer_id=id)
+        serializer = OrderSerializer(data, many=True)
+        data={
+            'status':True,
+            'data': serializer.data,
+            'error':False
+        }
+        return Response(data)

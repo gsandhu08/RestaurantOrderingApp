@@ -172,15 +172,5 @@ class OrderView(ModelViewSet):
         }
         return Response(data)
 
-    @action(detail=False,methods=['GET'])
-    def order_history_customer(self,request):
-        id= request.GET.get('id')
-        data= Order.objects.filter(customer_id=id)
-        serializer = OrderSerializer(data, many=True)
-        data={
-            'status':True,
-            'data': serializer.data,
-            'error':False
-        }
-        return Response(data)
+    
 
